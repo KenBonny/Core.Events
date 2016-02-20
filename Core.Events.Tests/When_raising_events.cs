@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Autofac;
 using Kenbo.Core.Events.Contracts;
 using Shouldly;
@@ -9,11 +8,11 @@ using Xunit;
 
 namespace Kenbo.Core.Events.Tests
 {
-    public class When_raising_an_event
+    public class When_raising_events : TestBase
     {
         private readonly ICollection<EventArgs> _arguments = new Collection<EventArgs>(); 
 
-        public When_raising_an_event()
+        public When_raising_events()
         {
             var builder = new ContainerBuilder();
             builder.RegisterInstance(new GenericEventHandler<TestWith>(x => _arguments.Add(x)))
@@ -31,8 +30,16 @@ namespace Kenbo.Core.Events.Tests
         [Fact]
         public void All_handlers_should_be_called()
         {
-            Event.Raise(TestWith.Create("Test this stuff"));
-            _arguments.Count.ShouldBe(3);
+            Event.Raise(TestWith.Create("Test with this"));
+            _arguments.Count.ShouldBe(3, Message());
+        }
+
+        [Fact]
+        public void Clearing_callbacks_should_not_be_called_anymore()
+        {
+            Event.ClearCallbacks();
+            Event.Raise(TestWith.Create("Test with this"));
+            _arguments.Count.ShouldBe(2, Message());
         }
     }
 }

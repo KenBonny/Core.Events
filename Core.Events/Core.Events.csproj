@@ -37,7 +37,6 @@
     <Compile Include="Contracts\IEventHandler.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="Contracts\IIocContainer.cs" />
-    <Compile Include="EventQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

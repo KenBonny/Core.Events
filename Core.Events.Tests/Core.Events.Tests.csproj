@@ -68,7 +68,8 @@
     <Compile Include="Setup\IocContainer.cs" />
     <Compile Include="Events\NeverCalled.cs" />
     <Compile Include="Events\TestWith.cs" />
-    <Compile Include="When_raising_an_event.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="When_raising_events.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
