@@ -16,22 +16,22 @@ namespace Kenbo.Core.Events.Tests
         public When_raising_an_event()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(new GenericEventHandler<TestEvent>(x => _arguments.Add(x)))
-                   .As<IEventHandler<TestEvent>>();
-            builder.RegisterInstance(new GenericEventHandler<TestEvent>(x => _arguments.Add(x)))
-                   .As<IEventHandler<TestEvent>>();
-            builder.RegisterInstance(new GenericEventHandler<NeverCalledEvent>(x => _arguments.Add(x)))
-                   .As<IEventHandler<NeverCalledEvent>>();
+            builder.RegisterInstance(new GenericEventHandler<TestWith>(x => _arguments.Add(x)))
+                   .As<IEventHandler<TestWith>>();
+            builder.RegisterInstance(new GenericEventHandler<TestWith>(x => _arguments.Add(x)))
+                   .As<IEventHandler<TestWith>>();
+            builder.RegisterInstance(new GenericEventHandler<NeverCalled>(x => _arguments.Add(x)))
+                   .As<IEventHandler<NeverCalled>>();
 
-            Event.Register<TestEvent>(x => _arguments.Add(x));
-            Event.Register<NeverCalledEvent>(x => _arguments.Add(x));
+            Event.Register<TestWith>(x => _arguments.Add(x));
+            Event.Register<NeverCalled>(x => _arguments.Add(x));
             Event.Container = new IocContainer(builder.Build());
         }
 
         [Fact]
         public void All_handlers_should_be_called()
         {
-            Event.Raise(TestEvent.Create("Test this stuff"));
+            Event.Raise(TestWith.Create("Test this stuff"));
             _arguments.Count.ShouldBe(3);
         }
     }

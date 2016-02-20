@@ -64,10 +64,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenericEventHandler.cs" />
-    <Compile Include="IocContainer.cs" />
-    <Compile Include="NeverCalledEvent.cs" />
-    <Compile Include="TestEvent.cs" />
+    <Compile Include="Setup\GenericEventHandler.cs" />
+    <Compile Include="Setup\IocContainer.cs" />
+    <Compile Include="Events\NeverCalled.cs" />
+    <Compile Include="Events\TestWith.cs" />
     <Compile Include="When_raising_an_event.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
