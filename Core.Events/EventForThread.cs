@@ -6,8 +6,9 @@ using Kenbo.Core.Events.Contracts;
 
 namespace Kenbo.Core.Events
 {
-    public static class Event
+    public static class EventForThread
     {
+        [ThreadStatic]
         private static ICollection<Delegate> _callbacks;
 
         public static IIocContainer Container { get; set; }
