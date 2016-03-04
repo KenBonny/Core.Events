@@ -8,26 +8,26 @@ namespace Kenbo.Core.Events
 {
     public static class Event
     {
-        private static ICollection<Delegate> _callbacks;
+        private static readonly ICollection<Delegate> Callbacks = new Collection<Delegate>();
 
         public static IIocContainer Container { get; set; }
 
-        public static void Raise<T>(T argument)
+        public static void Raise<T>(T eventArgument)
             where T : EventArgs
         {
+            if (!Callbacks.Any())
+            {
+                foreach (var handle in Callbacks.OfType<Action<T>>())
+                {
+                    handle(eventArgument);
+                }
+            }
+
             if (Container != null)
             {
                 foreach (var handler in Container.ResolveAll<T>())
                 {
-                    handler.Handle(argument);
-                }
-            }
-
-            if (_callbacks != null)
-            {
-                foreach (var handle in _callbacks.OfType<Action<T>>())
-                {
-                    handle(argument);
+                    handler.Handle(eventArgument);
                 }
             }
         }
@@ -35,17 +35,12 @@ namespace Kenbo.Core.Events
         public static void Register<T>(Action<T> callback)
             where T : EventArgs
         {
-            if (_callbacks == null)
-            {
-                _callbacks = new Collection<Delegate>();
-            }
-
-            _callbacks.Add(callback);
+            Callbacks.Add(callback);
         }
 
         public static void ClearCallbacks()
         {
-            _callbacks.Clear();
+            Callbacks.Clear();
         }
     }
 }
